@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autonomous AI Task Worker - Enterprise Prototype</title>
+  <!-- Tailwind CSS via CDN with fallback styling in styles.css -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/20">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      </div>
+      <div>
+        <h1 class="font-bold text-lg text-white tracking-tight flex items-center gap-2">
+          Autonomous AI Task Worker
+          <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">v1.0 Prototype</span>
+        </h1>
+        <p class="text-xs text-slate-400">Self-directing cognitive agent for enterprise reading, deciding, executing & verification</p>
+      </div>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <div id="agentStatusBadge" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs font-medium text-slate-300">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+        <span id="agentStatusText">Agent Ready</span>
+      </div>
+      <button id="resetErpBtn" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+        Reset ERP State
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
+
+    <!-- Task Dispatch Panel -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+      <div class="flex items-center justify-between">
+        <label for="taskInput" class="text-sm font-semibold text-slate-200 flex items-center gap-2">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          Natural Language Goal / Task Instruction
+        </label>
+        <span class="text-xs text-slate-500">Autonomous ReAct Loop with Self-Correction & Verification</span>
+      </div>
+
+      <div class="flex gap-3">
+        <input 
+          id="taskInput" 
+          type="text" 
+          value="Find the latest invoice from Company X, extract the amount and due date, enter it into our internal system, and tell me once it is done." 
+          class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
+          placeholder="State any enterprise task in plain English..."
+        />
+        <button 
+          id="runTaskBtn" 
+          class="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium text-sm rounded-xl shadow-lg shadow-blue-600/25 flex items-center gap-2 transition disabled:opacity-50">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Execute Autonomously</span>
+        </button>
+      </div>
+
+      <!-- Quick Preset Benchmark Chips -->
+      <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800/80">
+        <span class="text-xs text-slate-400 font-medium mr-1">Benchmarks:</span>
+        <button class="preset-btn text-xs px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 border border-slate-700 transition" 
+          data-task="Find the latest invoice from Company X, extract the amount and due date, enter it into our internal system, and tell me once it is done.">
+          ⭐ Company X (Primary Spec)
+        </button>
+        <button class="preset-btn text-xs px-3 py-1.5 rounded-lg bg-amber-950/30 hover:bg-amber-900/40 text-amber-300 border border-amber-800/40 transition" 
+          data-task="Process latest invoice for GlobalTech and enter into internal ERP system.">
+          🛡️ GlobalTech (High-Value HIL Approval)
+        </button>
+        <button class="preset-btn text-xs px-3 py-1.5 rounded-lg bg-purple-950/30 hover:bg-purple-900/40 text-purple-300 border border-purple-800/40 transition" 
+          data-task="Onboard new employee Elena Rostova from onboarding dossier into directory.">
+          🌐 Employee Onboarding (Generalization)
+        </button>
+        <button class="preset-btn text-xs px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 border border-slate-700 transition" 
+          data-task="Record invoice from Acme Industrial Supplies into our accounting ledger.">
+          📦 Acme Industrial Supplies
+        </button>
+      </div>
+    </div>
+
+    <!-- Dual Column Workspace -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- Left Column: Agent Autonomous Execution Feed (7 cols) -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- Decomposed Plan Hierarchy -->
+        <div id="planContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg hidden">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+              <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Execution Strategy & Decomposed Plan
+            </h2>
+            <span id="planIntentBadge" class="text-xs px-2 py-0.5 rounded-md bg-cyan-950/60 text-cyan-400 border border-cyan-800">INVOICE_PROCESSING</span>
+          </div>
+          <div id="planStepsList" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
+        </div>
+
+        <!-- Live ReAct Action Stream -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-2">
+              <h2 class="text-sm font-semibold text-slate-200">ReAct Cognitive Trajectory</h2>
+              <span id="stepCounter" class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-400">0 Steps</span>
+            </div>
+            <div class="text-xs text-slate-500">Thought ➔ Tool ➔ Observation ➔ Reflection</div>
+          </div>
+
+          <div id="executionFeed" class="space-y-4 max-h-[560px] overflow-y-auto pr-2">
+            <div id="emptyFeedPrompt" class="py-16 text-center text-slate-500 space-y-2">
+              <svg class="w-10 h-10 mx-auto text-slate-600 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+              <p class="text-sm">Click "Execute Autonomously" to start the worker.</p>
+              <p class="text-xs text-slate-600">The agent will inspect files, make decisions, execute in ERP, and verify proof.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Completion Summary Banner -->
+        <div id="completionBanner" class="bg-gradient-to-r from-emerald-950/40 to-slate-900 border border-emerald-500/30 rounded-2xl p-5 shadow-xl space-y-3 hidden">
+          <div class="flex items-center gap-2 text-emerald-400 font-semibold text-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Task Outcome Verified & Completed
+          </div>
+          <p id="completionSummaryText" class="text-sm text-slate-300 leading-relaxed"></p>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Simulated Company Ecosystem & Verification (5 cols) -->
+      <div class="lg:col-span-5 space-y-6">
+
+        <!-- Environment Tabs -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="flex gap-2">
+              <button id="tabErpBtn" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white transition">
+                Internal ERP
+              </button>
+              <button id="tabFilesBtn" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition">
+                File Dropzone
+              </button>
+              <button id="tabVerifyBtn" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition">
+                Verification Proof
+              </button>
+              <button id="tabAuditBtn" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition">
+                Audit Log
+              </button>
+            </div>
+            <span class="text-xs text-slate-500">Live State</span>
+          </div>
+
+          <!-- Tab Content 1: ERP Ledger -->
+          <div id="tabErpContent" class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-medium text-slate-400">Accounts Payable Ledger</h3>
+              <span id="erpRecordCount" class="text-xs text-slate-500">1 record</span>
+            </div>
+            <div class="overflow-x-auto max-h-[460px]">
+              <table class="w-full text-left text-xs text-slate-300 border-collapse">
+                <thead class="bg-slate-950 text-slate-400 sticky top-0 border-b border-slate-800">
+                  <tr>
+                    <th class="p-2">ID</th>
+                    <th class="p-2">Invoice #</th>
+                    <th class="p-2">Vendor</th>
+                    <th class="p-2 text-right">Amount</th>
+                    <th class="p-2">Due Date</th>
+                    <th class="p-2">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="erpInvoicesTableBody" class="divide-y divide-slate-800/60"></tbody>
+              </table>
+            </div>
+
+            <!-- Employee Directory Table -->
+            <div class="pt-3 border-t border-slate-800">
+              <h3 class="text-xs font-medium text-slate-400 mb-2">Corporate Employee Directory</h3>
+              <div class="overflow-x-auto max-h-[160px]">
+                <table class="w-full text-left text-xs text-slate-300 border-collapse">
+                  <thead class="bg-slate-950 text-slate-400 sticky top-0 border-b border-slate-800">
+                    <tr>
+                      <th class="p-2">Emp ID</th>
+                      <th class="p-2">Full Name</th>
+                      <th class="p-2">Department</th>
+                      <th class="p-2">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="erpEmployeesTableBody" class="divide-y divide-slate-800/60"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Content 2: Files -->
+          <div id="tabFilesContent" class="space-y-3 hidden">
+            <h3 class="text-xs font-medium text-slate-400">Company Storage Dropzone (/company_files)</h3>
+            <div id="filesListContainer" class="space-y-2 max-h-[460px] overflow-y-auto"></div>
+          </div>
+
+          <!-- Tab Content 3: Verification & Proof of Work -->
+          <div id="tabVerifyContent" class="space-y-4 hidden">
+            <h3 class="text-xs font-medium text-slate-400">Independent Verification & Audit Receipt</h3>
+            <div id="proofOfWorkContainer" class="text-xs text-slate-400 space-y-3">
+              <p class="text-slate-500 italic">No verification receipt yet. Run a task to generate proof.</p>
+            </div>
+          </div>
+
+          <!-- Tab Content 4: Audit Logs -->
+          <div id="tabAuditContent" class="space-y-3 hidden">
+            <h3 class="text-xs font-medium text-slate-400">Internal Security & ERP Audit Trail</h3>
+            <div id="auditLogsContainer" class="space-y-2 max-h-[460px] overflow-y-auto font-mono text-xs"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Human-In-The-Loop Approval Modal -->
+  <div id="approvalModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-amber-500/40 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white">Human Approval Required</h3>
+          <p class="text-xs text-amber-400">Financial Safety Threshold Triggered</p>
+        </div>
+      </div>
+
+      <div class="space-y-2 text-xs text-slate-300 bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+        <p id="approvalReasonText" class="font-medium text-slate-200"></p>
+        <div id="approvalDetailsContainer" class="space-y-1 pt-2 border-t border-slate-800 text-slate-400 font-mono"></div>
+      </div>
+
+      <div class="flex justify-end gap-3 pt-2">
+        <button id="denyApprovalBtn" class="px-4 py-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+          Deny Transaction
+        </button>
+        <button id="grantApprovalBtn" class="px-4 py-2 text-xs rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-medium shadow-lg shadow-amber-600/30 transition">
+          Authorize & Grant Approval
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

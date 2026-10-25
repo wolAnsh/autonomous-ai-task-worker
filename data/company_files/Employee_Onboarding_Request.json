@@ -1,0 +1,11 @@
+{
+  "request_type": "EMPLOYEE_ONBOARDING",
+  "employee_id": "EMP-2026-441",
+  "full_name": "Elena Rostova",
+  "department": "Engineering",
+  "role": "Senior Distributed Systems Engineer",
+  "start_date": "2026-11-01",
+  "manager": "Sarah Chen",
+  "requested_systems": ["GITHUB_ENTERPRISE", "AWS_SANDBOX", "INTERNAL_SLACK", "JIRA_ACCESS"],
+  "laptop_provisioning": "MacBook Pro 16 M3 Max"
+}

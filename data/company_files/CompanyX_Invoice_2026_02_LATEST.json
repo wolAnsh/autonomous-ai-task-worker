@@ -1,0 +1,27 @@
+{
+  "vendor": "Company X Logistics",
+  "vendor_id": "VEND-COMP-X",
+  "invoice_number": "INV-88421",
+  "invoice_date": "2026-10-20",
+  "due_date": "2026-11-12",
+  "currency": "USD",
+  "line_items": [
+    {
+      "description": "Enterprise freight transit Q4",
+      "quantity": 1,
+      "unit_price": 3500.00,
+      "total": 3500.00
+    },
+    {
+      "description": "Express customs clearance expedite",
+      "quantity": 3,
+      "unit_price": 450.00,
+      "total": 1350.00
+    }
+  ],
+  "subtotal": 4850.00,
+  "tax": 0.00,
+  "total_amount": 4850.00,
+  "payment_terms": "Net 30",
+  "remittance_account": "ACH-98234-99"
+}

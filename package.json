@@ -1,0 +1,27 @@
+{
+  "name": "autonomous-ai-task-worker",
+  "version": "1.0.0",
+  "description": "Autonomous AI Task Worker Prototype - Self-directing agent for complex enterprise workflows",
+  "main": "cli.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server/app.js",
+    "cli": "node cli.js",
+    "test": "node --test tests/agent.test.js tests/hil-approval.test.js tests/verification.test.js tests/generalization.test.js tests/self-healer.test.js",
+    "test:verbose": "node --test --test-reporter spec tests/agent.test.js tests/hil-approval.test.js tests/verification.test.js tests/generalization.test.js tests/self-healer.test.js"
+  },
+  "keywords": [
+    "ai-agent",
+    "autonomous-worker",
+    "react-loop",
+    "enterprise-automation",
+    "zero-dependency",
+    "human-in-the-loop",
+    "verification"
+  ],
+  "author": "Anshu Kumar",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

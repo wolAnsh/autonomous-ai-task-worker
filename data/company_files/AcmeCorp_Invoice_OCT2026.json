@@ -1,0 +1,26 @@
+{
+  "vendor": "Acme Industrial Supplies",
+  "vendor_id": "VEND-ACME-01",
+  "invoice_number": "INV-ACME-902",
+  "invoice_date": "2026-10-15",
+  "due_date": "2026-11-05",
+  "currency": "USD",
+  "line_items": [
+    {
+      "description": "Cleanroom air filters (x20)",
+      "quantity": 20,
+      "unit_price": 50.00,
+      "total": 1000.00
+    },
+    {
+      "description": "Hazardous materials courier charge",
+      "quantity": 1,
+      "unit_price": 250.00,
+      "total": 250.00
+    }
+  ],
+  "subtotal": 1250.00,
+  "tax": 0.00,
+  "total_amount": 1250.00,
+  "payment_terms": "Net 21"
+}

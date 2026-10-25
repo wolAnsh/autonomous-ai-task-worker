@@ -1,0 +1,21 @@
+{
+  "vendor": "GlobalTech Solutions International",
+  "vendor_id": "VEND-GTECH-99",
+  "invoice_number": "INV-GT-5091",
+  "invoice_date": "2026-10-24",
+  "due_date": "2026-12-01",
+  "currency": "USD",
+  "line_items": [
+    {
+      "description": "Annual Enterprise Cloud Infrastructure Licensing",
+      "quantity": 1,
+      "unit_price": 18500.00,
+      "total": 18500.00
+    }
+  ],
+  "subtotal": 18500.00,
+  "tax": 0.00,
+  "total_amount": 18500.00,
+  "payment_terms": "Due Upon Receipt",
+  "requires_executive_approval": true
+}
